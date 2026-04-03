@@ -78,7 +78,7 @@ pipeline {
           docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
             def workerImage = docker.build("aquacor/worker:v${env.BUILD_ID}", './worker')
             workerImage.push()
-            workerImage.push("${env.BRANCH_NAME}")
+            workerImage.push("${env.BUILD_ID}")
             workerImage.push('latest')
           }
         }
@@ -137,7 +137,7 @@ pipeline {
           docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
             def resultImage = docker.build("aquacor/result:v${env.BUILD_ID}", './result')
             resultImage.push()
-            resultImage.push("${env.BRANCH_NAME}")
+            resultImage.push("${env.BUILD_ID}")
             resultImage.push('latest')
           }
         }
@@ -209,7 +209,7 @@ pipeline {
             // ./vote is the path to the Dockerfile that Jenkins will find from the Github repo
             def voteImage = docker.build("aquacor/vote:${env.GIT_COMMIT}", "./vote")
             voteImage.push()
-            voteImage.push("${env.BRANCH_NAME}")
+            voteImage.push("${env.GIT_COMMIT}")
             voteImage.push("latest")
           }
         }
